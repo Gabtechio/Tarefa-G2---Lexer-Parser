@@ -11,6 +11,7 @@ class ErroLexico(Exception):
 class DartLexer(Lexer):
         tokens = {
         ID, TYPE, VAR, FINAL, IF, ELSE, FOR, PRINT, TRUE, FALSE,
+        INT_LIT, DOUBLE_LIT, STRING_LIT,
         LPAREN, RPAREN, LBRACE, RBRACE, SEMI,
     }
 
@@ -41,6 +42,25 @@ class DartLexer(Lexer):
     ID['num'] = TYPE
     ID['bool'] = TYPE
     ID['String'] = TYPE
+
+    @_(r'\d+\.\d+')
+    def DOUBLE_LIT(self, t):
+        t.value = float(t.value)
+        return t
+
+    @_(r'\d+')
+    def INT_LIT(self, t):
+        t.value = int(t.value)
+        return t
+
+    @_(r'"(?:\\.|[^"\\\n])*"' r"|'(?:\\.|[^'\\\n])*'")
+    def STRING_LIT(self, t):
+        texto = t.value[1:-1]
+        texto = (texto.replace('\\n', '\n').replace('\\t', '\t')
+                 .replace('\\"', '"').replace("\\'", "'")
+                 .replace('\\\\', '\\'))
+        t.value = texto
+        return t
 
     def error(self, t):
         raise ErroLexico(f"caractere inválido {t.value[0]!r}", self.lineno)
