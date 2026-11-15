@@ -9,9 +9,12 @@ class ErroLexico(Exception):
 
 
 class DartLexer(Lexer):
-        tokens = {
+           tokens = {
         ID, TYPE, VAR, FINAL, IF, ELSE, FOR, PRINT, TRUE, FALSE,
         INT_LIT, DOUBLE_LIT, STRING_LIT,
+        INCREMENT, DECREMENT, PLUSEQ, MINUSEQ,
+        EQ, NE, LE, GE, LT, GT, ASSIGN,
+        PLUS, MINUS, TIMES, DIVIDE, MOD,
         LPAREN, RPAREN, LBRACE, RBRACE, SEMI,
     }
 
@@ -61,6 +64,24 @@ class DartLexer(Lexer):
                  .replace('\\\\', '\\'))
         t.value = texto
         return t
+
+    INCREMENT = r'\+\+'
+    DECREMENT = r'--'
+    PLUSEQ = r'\+='
+    MINUSEQ = r'-='
+    EQ = r'=='
+    NE = r'!='
+    LE = r'<='
+    GE = r'>='
+
+    PLUS = r'\+'
+    MINUS = r'-'
+    TIMES = r'\*'
+    DIVIDE = r'/'
+    MOD = r'%'
+    ASSIGN = r'='
+    LT = r'<'
+    GT = r'>'
 
     def error(self, t):
         raise ErroLexico(f"caractere inválido {t.value[0]!r}", self.lineno)
