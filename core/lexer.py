@@ -84,4 +84,7 @@ class DartLexer(Lexer):
     GT = r'>'
 
     def error(self, t):
-        raise ErroLexico(f"caractere inválido {t.value[0]!r}", self.lineno)
+        caractere = t.value[0]
+        if caractere in ('"', "'"):
+            raise ErroLexico("string não foi fechada", self.lineno)
+        raise ErroLexico(f"caractere inválido {caractere!r}", self.lineno)
