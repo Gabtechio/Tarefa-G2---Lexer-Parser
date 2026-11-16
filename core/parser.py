@@ -1,0 +1,89 @@
+from sly import Parser
+from core.lexer import DartLexer
+
+
+class ErroSintatico(Exception):
+    def __init__(self, mensagem, linha):
+        super().__init__(mensagem)
+        self.mensagem = mensagem
+        self.linha = linha
+
+
+class DartParser(Parser):
+    debugfile = 'parser.out'
+    tokens = DartLexer.tokens
+
+    precedence = (
+        ('left', PLUS, MINUS),
+        ('left', TIMES, DIVIDE, MOD),
+        ('right', UMINUS),
+    )
+
+    # ---------------------------------------------------------- programa
+    @_('statement_list')
+    def program(self, p):
+        return ('program', p.statement_list)
+
+    @_('')
+    def program(self, p):
+        return ('program', [])
+
+    @_('statement_list statement')
+    def statement_list(self, p):
+        return p.statement_list + [p.statement]
+
+    @_('statement')
+    def statement(self, p):
+        return [p.statement]
+
+    # ---------------------------------------------------------- comandos
+    @_('PRINT LPAREN expr RPAREN SEMI')
+    def statement(self, p):
+        return ('print', p.expr, p.lineno)
+
+    # ---------------------------------------------------------- expressões
+    @_('expr PLUS expr',
+       'expr MINUS expr',
+       'expr TIMES expr',
+       'expr DIVIDE expr',
+       'expr MOD expr')
+    def expr(self, p):
+        return ('binop', p[1], p.expr0, p.expr1)
+
+    @_('MINUS expr %prec UMINUS')
+    def expr(self, p):
+        return ('neg', p.expr)
+
+    @_('LPAREN expr RPAREN')
+    def expr(self, p):
+        return p.expr
+
+    @_('INT_LIT')
+    def expr(self, p):
+        return ('int', p.INT_LIT)
+
+    @_('DOUBLE_LIT')
+    def expr(self, p):
+        return ('double', p.DOUBLE_LIT)
+
+    @_('STRING_LIT')
+    def expr(self, p):
+        return ('string', p.STRING_LIT)
+
+    @_('TRUE')
+    def expr(self, p):
+        return ('bool', True)
+
+    @_('FALSE')
+    def expr(self, p):
+        return ('bool', False)
+
+    @_('ID')
+    def expr(self, p):
+        return ('var', p.ID, p.lineno)
+
+    # ---------------------------------------------------------- erros
+    def error(self, token):
+        if token:
+            raise ErroSintatico(f"token inesperado {token.value!r}", token.lineno)
+        raise ErroSintatico("fim do arquivo inesperado (faltou ';' ou '}' ?)", None)
