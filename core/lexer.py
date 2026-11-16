@@ -9,7 +9,7 @@ class ErroLexico(Exception):
 
 
 class DartLexer(Lexer):
-           tokens = {
+    tokens = {
         ID, TYPE, VAR, FINAL, IF, ELSE, FOR, PRINT, TRUE, FALSE,
         INT_LIT, DOUBLE_LIT, STRING_LIT,
         INCREMENT, DECREMENT, PLUSEQ, MINUSEQ,
@@ -19,7 +19,7 @@ class DartLexer(Lexer):
     }
 
     ignore = ' \t\r'
-   
+
     ignore_comentario_linha = r'//[^\n]*'
 
     @_(r'/\*[\s\S]*?\*/')
@@ -82,6 +82,12 @@ class DartLexer(Lexer):
     ASSIGN = r'='
     LT = r'<'
     GT = r'>'
+
+    LPAREN = r'\('
+    RPAREN = r'\)'
+    LBRACE = r'\{'
+    RBRACE = r'\}'
+    SEMI = r';'
 
     def error(self, t):
         caractere = t.value[0]
