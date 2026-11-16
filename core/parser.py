@@ -43,6 +43,56 @@ class DartParser(Parser):
     def statement(self, p):
         return ('print', p.expr, p.lineno)
 
+        @_('decl_init SEMI', 'update SEMI')
+    def statement(self, p):
+        return p[0]
+
+    @_('VAR ID SEMI')
+    def statement(self, p):
+        return ('decl', 'var', p.ID, None, False, p.lineno)
+
+    @_('TYPE ID SEMI')
+    def statement(self, p):
+        return ('decl', p.TYPE, p.ID, None, False, p.lineno)
+
+    # ---------------------------------------------------------- tarefa 1: atribuição
+    @_('VAR ID ASSIGN expr')
+    def decl_init(self, p):
+        return ('decl', 'var', p.ID, p.expr, False, p.lineno)
+
+    @_('TYPE ID ASSIGN expr')
+    def decl_init(self, p):
+        return ('decl', p.TYPE, p.ID, p.expr, False, p.lineno)
+
+    @_('FINAL ID ASSIGN expr')
+    def decl_init(self, p):
+        return ('decl', 'var', p.ID, p.expr, True, p.lineno)
+
+    @_('FINAL TYPE ID ASSIGN expr')
+    def decl_init(self, p):
+        return ('decl', p.TYPE, p.ID, p.expr, True, p.lineno)
+
+    @_('ID ASSIGN expr')
+    def update(self, p):
+        return ('assign', p.ID, '=', p.expr, p.lineno)
+
+    @_('ID PLUSEQ expr')
+    def update(self, p):
+        return ('assign', p.ID, '+=', p.expr, p.lineno)
+
+    @_('ID MINUSEQ expr')
+    def update(self, p):
+        return ('assign', p.ID, '-=', p.expr, p.lineno)
+
+    @_('ID INCREMENT', 'INCREMENT ID')
+    def update(self, p):
+        return ('assign', p.ID, '+=', ('int', 1), p.lineno)
+
+    @_('ID DECREMENT', 'DECREMENT ID')
+    def update(self, p):
+        return ('assign', p.ID, '-=', ('int', 1), p.lineno)
+
+
     # ---------------------------------------------------------- expressões
     @_('expr PLUS expr',
        'expr MINUS expr',

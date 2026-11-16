@@ -55,6 +55,19 @@ class Interpretador:
                 return escopo[nome]
         self.erro(f"variável '{nome}' não foi declarada")
 
+    def conformar(self, tipo, valor, nome):
+        if tipo == 'dynamic':
+            return valor
+        t = tipo_de(valor)
+        if tipo == 'double' and t == 'int':
+            return float(valor)
+        if tipo == 'num' and t in ('int', 'double'):
+            return valor
+        if t != tipo:
+            self.erro(f"não é possível atribuir {t} à variável '{nome}' do tipo {tipo}")
+        return valor
+
+
     def executar_bloco(self, comandos):
         self.escopos.append({})
         try:
