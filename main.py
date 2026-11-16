@@ -79,10 +79,42 @@ class Interpretador:
     def executar(self, no):
         getattr(self, 'exec_' + no[0])(no)
 
+        def exec_decl(self, no):
+        _, tipo, nome, expr, final, linha = no
+        self.linha = linha
+        if nome in self.escopos[-1]:
+            self.erro(f"variável '{nome}' já foi declarada neste escopo")
+        valor = None
+        if expr is not None:
+            valor = self.avaliar(expr)
+            if tipo == 'var':
+                tipo = tipo_de(valor)
+            else:
+                valor = self.conformar(tipo, valor, nome)
+        elif tipo == 'var':
+            tipo = 'dynamic'
+        self.escopos[-1][nome] = {'tipo': tipo, 'valor': valor, 'final': final}
+
+    def exec_assign(self, no):
+        _, nome, op, expr, linha = no
+        self.linha = linha
+        var = self.buscar(nome)
+        if var['final']:
+            self.erro(f"variável final '{nome}' não pode receber novo valor")
+        valor = self.avaliar(expr)
+        if op != '=':
+            if var['valor'] is None:
+                self.erro(f"variável '{nome}' usada antes de receber valor")
+            valor = self.operar(op[0], var['valor'], valor)
+        var['valor'] = self.conformar(var['tipo'], valor, nome)
+
+
+
     def exec_print(self, no):
         _, expr, linha = no
         self.linha = linha
         print(formatar(self.avaliar(expr)))
+
 
     def avaliar(self, no):
         tipo = no[0]
