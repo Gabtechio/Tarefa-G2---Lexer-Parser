@@ -33,8 +33,10 @@ class DartParser(Parser):
         return p.statement_list + [p.statement]
 
     @_('statement')
-    def statement(self, p):
+    def statement_list(self, p):
         return [p.statement]
+
+
 
     # ---------------------------------------------------------- comandos
     @_('PRINT LPAREN expr RPAREN SEMI')
