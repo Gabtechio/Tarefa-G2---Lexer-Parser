@@ -1,0 +1,19 @@
+// Tarefa 4: FOR com intervalo e incremento
+for (var i = 0; i < 3; i++) {
+  print(i);
+}
+
+for (int j = 10; j > 0; j -= 5) {
+  print(j);
+}
+
+for (int k = 0; k <= 6; k += 2) {
+  print("k = ");
+  print(k);
+}
+
+int total = 0;
+for (var n = 1; n <= 5; n++) {
+  total += n;
+}
+print(total);

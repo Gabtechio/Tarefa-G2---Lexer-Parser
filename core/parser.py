@@ -1,3 +1,5 @@
+
+
 from sly import Parser
 from core.lexer import DartLexer
 
@@ -19,14 +21,10 @@ class DartParser(Parser):
         ('right', UMINUS),
     )
 
-    # ---------------------------------------------------------- programa
+    # ------------------------------------------------------------ programa
     @_('statement_list')
     def program(self, p):
         return ('program', p.statement_list)
-
-    @_('decl_init SEMI', 'update SEMI', 'if_stmt', 'for_stmt')
-    def statement(self, p):
-        return p[0]
 
     @_('')
     def program(self, p):
@@ -40,24 +38,8 @@ class DartParser(Parser):
     def statement_list(self, p):
         return [p.statement]
 
-    # ---------------------------------------------------------- tarefa 4: FOR
-    @_('FOR LPAREN for_init SEMI condition SEMI update RPAREN block')
-    def for_stmt(self, p):
-        return ('for', p.for_init, p.condition, p.update, p.block, p.lineno)
-
-    @_('decl_init', 'update')
-    def for_init(self, p):
-        return p[0]
-
-
-
-
-    # ---------------------------------------------------------- comandos
-    @_('PRINT LPAREN expr RPAREN SEMI')
-    def statement(self, p):
-        return ('print', p.expr, p.lineno)
-
-        @_('decl_init SEMI', 'update SEMI')
+    # ------------------------------------------------------------ comandos
+    @_('decl_init SEMI', 'update SEMI', 'if_stmt', 'for_stmt')
     def statement(self, p):
         return p[0]
 
@@ -69,7 +51,11 @@ class DartParser(Parser):
     def statement(self, p):
         return ('decl', p.TYPE, p.ID, None, False, p.lineno)
 
-    # ---------------------------------------------------------- tarefa 1: atribuição
+    @_('PRINT LPAREN expr RPAREN SEMI')
+    def statement(self, p):
+        return ('print', p.expr, p.lineno)
+
+    # ------------------------------------------------------------ tarefa 1: atribuição
     @_('VAR ID ASSIGN expr')
     def decl_init(self, p):
         return ('decl', 'var', p.ID, p.expr, False, p.lineno)
@@ -106,8 +92,45 @@ class DartParser(Parser):
     def update(self, p):
         return ('assign', p.ID, '-=', ('int', 1), p.lineno)
 
+    # ------------------------------------------------------------ tarefa 3: IF
+    @_('IF LPAREN condition RPAREN block')
+    def if_stmt(self, p):
+        return ('if', p.condition, p.block, None, p.lineno)
 
-    # ---------------------------------------------------------- expressões
+    @_('IF LPAREN condition RPAREN block ELSE block')
+    def if_stmt(self, p):
+        return ('if', p.condition, p.block0, p.block1, p.lineno)
+
+    @_('IF LPAREN condition RPAREN block ELSE if_stmt')
+    def if_stmt(self, p):
+        return ('if', p.condition, p.block, [p.if_stmt], p.lineno)
+
+    @_('LBRACE statement_list RBRACE')
+    def block(self, p):
+        return p.statement_list
+
+    @_('LBRACE RBRACE')
+    def block(self, p):
+        return []
+
+    @_('expr comp_op expr')
+    def condition(self, p):
+        return ('cond', p.comp_op, p.expr0, p.expr1)
+
+    @_('EQ', 'NE', 'LT', 'LE', 'GT', 'GE')
+    def comp_op(self, p):
+        return p[0]
+
+    # ------------------------------------------------------------ tarefa 4: FOR
+    @_('FOR LPAREN for_init SEMI condition SEMI update RPAREN block')
+    def for_stmt(self, p):
+        return ('for', p.for_init, p.condition, p.update, p.block, p.lineno)
+
+    @_('decl_init', 'update')
+    def for_init(self, p):
+        return p[0]
+
+    # ------------------------------------------------------------ expressões
     @_('expr PLUS expr',
        'expr MINUS expr',
        'expr TIMES expr',
@@ -148,7 +171,7 @@ class DartParser(Parser):
     def expr(self, p):
         return ('var', p.ID, p.lineno)
 
-    # ---------------------------------------------------------- erros
+    # ------------------------------------------------------------ erros
     def error(self, token):
         if token:
             raise ErroSintatico(f"token inesperado {token.value!r}", token.lineno)

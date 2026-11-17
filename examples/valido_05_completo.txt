@@ -1,0 +1,17 @@
+// Combinação das 4 estruturas
+int limite = 5;
+int pares = 0;
+
+for (int i = 1; i <= limite; i++) {
+  if (i % 2 == 0) {
+    pares += 1;
+    print("par:");
+    print(i);
+  } else {
+    print("impar:");
+    print(i);
+  }
+}
+
+print("quantidade de pares:");
+print(pares);

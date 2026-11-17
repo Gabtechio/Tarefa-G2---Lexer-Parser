@@ -1,0 +1,1850 @@
+Grammar:
+
+Rule 0     S' -> program
+Rule 1     program -> <empty>
+Rule 2     program -> statement_list
+Rule 3     statement_list -> statement
+Rule 4     statement_list -> statement_list statement
+Rule 5     statement -> PRINT LPAREN expr RPAREN SEMI
+Rule 6     statement -> TYPE ID SEMI
+Rule 7     statement -> VAR ID SEMI
+Rule 8     statement -> for_stmt
+Rule 9     statement -> if_stmt
+Rule 10    statement -> update SEMI
+Rule 11    statement -> decl_init SEMI
+Rule 12    decl_init -> FINAL TYPE ID ASSIGN expr
+Rule 13    decl_init -> FINAL ID ASSIGN expr
+Rule 14    decl_init -> TYPE ID ASSIGN expr
+Rule 15    decl_init -> VAR ID ASSIGN expr
+Rule 16    update -> DECREMENT ID
+Rule 17    update -> ID DECREMENT
+Rule 18    update -> INCREMENT ID
+Rule 19    update -> ID INCREMENT
+Rule 20    update -> ID MINUSEQ expr
+Rule 21    update -> ID PLUSEQ expr
+Rule 22    update -> ID ASSIGN expr
+Rule 23    if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt
+Rule 24    if_stmt -> IF LPAREN condition RPAREN block ELSE block
+Rule 25    if_stmt -> IF LPAREN condition RPAREN block
+Rule 26    block -> LBRACE RBRACE
+Rule 27    block -> LBRACE statement_list RBRACE
+Rule 28    condition -> expr comp_op expr
+Rule 29    comp_op -> GE
+Rule 30    comp_op -> GT
+Rule 31    comp_op -> LE
+Rule 32    comp_op -> LT
+Rule 33    comp_op -> NE
+Rule 34    comp_op -> EQ
+Rule 35    for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block
+Rule 36    for_init -> update
+Rule 37    for_init -> decl_init
+Rule 38    expr -> ID
+Rule 39    expr -> FALSE
+Rule 40    expr -> TRUE
+Rule 41    expr -> STRING_LIT
+Rule 42    expr -> DOUBLE_LIT
+Rule 43    expr -> INT_LIT
+Rule 44    expr -> LPAREN expr RPAREN
+Rule 45    expr -> MINUS expr  [precedence=right, level=3]
+Rule 46    expr -> expr MOD expr  [precedence=left, level=2]
+Rule 47    expr -> expr DIVIDE expr  [precedence=left, level=2]
+Rule 48    expr -> expr TIMES expr  [precedence=left, level=2]
+Rule 49    expr -> expr MINUS expr  [precedence=left, level=1]
+Rule 50    expr -> expr PLUS expr  [precedence=left, level=1]
+
+Terminals, with rules where they appear:
+
+ASSIGN               : 12 13 14 15 22
+DECREMENT            : 16 17
+DIVIDE               : 47
+DOUBLE_LIT           : 42
+ELSE                 : 23 24
+EQ                   : 34
+FALSE                : 39
+FINAL                : 12 13
+FOR                  : 35
+GE                   : 29
+GT                   : 30
+ID                   : 6 7 12 13 14 15 16 17 18 19 20 21 22 38
+IF                   : 23 24 25
+INCREMENT            : 18 19
+INT_LIT              : 43
+LBRACE               : 26 27
+LE                   : 31
+LPAREN               : 5 23 24 25 35 44
+LT                   : 32
+MINUS                : 45 49
+MINUSEQ              : 20
+MOD                  : 46
+NE                   : 33
+PLUS                 : 50
+PLUSEQ               : 21
+PRINT                : 5
+RBRACE               : 26 27
+RPAREN               : 5 23 24 25 35 44
+SEMI                 : 5 6 7 10 11 35 35
+STRING_LIT           : 41
+TIMES                : 48
+TRUE                 : 40
+TYPE                 : 6 12 14
+VAR                  : 7 15
+error                : 
+
+Nonterminals, with rules where they appear:
+
+block                : 23 24 24 25 35
+comp_op              : 28
+condition            : 23 24 25 35
+decl_init            : 11 37
+expr                 : 5 12 13 14 15 20 21 22 28 28 44 45 46 46 47 47 48 48 49 49 50 50
+for_init             : 35
+for_stmt             : 8
+if_stmt              : 9 23
+program              : 0
+statement            : 3 4
+statement_list       : 2 4 27
+update               : 10 35 36
+
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> .
+    (2) program -> . statement_list
+    (3) statement_list -> . statement
+    (4) statement_list -> . statement_list statement
+    (5) statement -> . PRINT LPAREN expr RPAREN SEMI
+    (6) statement -> . TYPE ID SEMI
+    (7) statement -> . VAR ID SEMI
+    (8) statement -> . for_stmt
+    (9) statement -> . if_stmt
+    (10) statement -> . update SEMI
+    (11) statement -> . decl_init SEMI
+    (35) for_stmt -> . FOR LPAREN for_init SEMI condition SEMI update RPAREN block
+    (23) if_stmt -> . IF LPAREN condition RPAREN block ELSE if_stmt
+    (24) if_stmt -> . IF LPAREN condition RPAREN block ELSE block
+    (25) if_stmt -> . IF LPAREN condition RPAREN block
+    (16) update -> . DECREMENT ID
+    (17) update -> . ID DECREMENT
+    (18) update -> . INCREMENT ID
+    (19) update -> . ID INCREMENT
+    (20) update -> . ID MINUSEQ expr
+    (21) update -> . ID PLUSEQ expr
+    (22) update -> . ID ASSIGN expr
+    (12) decl_init -> . FINAL TYPE ID ASSIGN expr
+    (13) decl_init -> . FINAL ID ASSIGN expr
+    (14) decl_init -> . TYPE ID ASSIGN expr
+    (15) decl_init -> . VAR ID ASSIGN expr
+    $end            reduce using rule 1 (program -> .)
+    PRINT           shift and go to state 4
+    TYPE            shift and go to state 5
+    VAR             shift and go to state 7
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+    DECREMENT       shift and go to state 14
+    ID              shift and go to state 6
+    INCREMENT       shift and go to state 15
+    FINAL           shift and go to state 16
+
+    program                        shift and go to state 1
+    statement_list                 shift and go to state 2
+    statement                      shift and go to state 3
+    for_stmt                       shift and go to state 8
+    if_stmt                        shift and go to state 9
+    update                         shift and go to state 10
+    decl_init                      shift and go to state 11
+
+state 1
+
+    (0) S' -> program .
+
+
+state 2
+
+    (2) program -> statement_list .
+    (4) statement_list -> statement_list . statement
+    (5) statement -> . PRINT LPAREN expr RPAREN SEMI
+    (6) statement -> . TYPE ID SEMI
+    (7) statement -> . VAR ID SEMI
+    (8) statement -> . for_stmt
+    (9) statement -> . if_stmt
+    (10) statement -> . update SEMI
+    (11) statement -> . decl_init SEMI
+    (35) for_stmt -> . FOR LPAREN for_init SEMI condition SEMI update RPAREN block
+    (23) if_stmt -> . IF LPAREN condition RPAREN block ELSE if_stmt
+    (24) if_stmt -> . IF LPAREN condition RPAREN block ELSE block
+    (25) if_stmt -> . IF LPAREN condition RPAREN block
+    (16) update -> . DECREMENT ID
+    (17) update -> . ID DECREMENT
+    (18) update -> . INCREMENT ID
+    (19) update -> . ID INCREMENT
+    (20) update -> . ID MINUSEQ expr
+    (21) update -> . ID PLUSEQ expr
+    (22) update -> . ID ASSIGN expr
+    (12) decl_init -> . FINAL TYPE ID ASSIGN expr
+    (13) decl_init -> . FINAL ID ASSIGN expr
+    (14) decl_init -> . TYPE ID ASSIGN expr
+    (15) decl_init -> . VAR ID ASSIGN expr
+    $end            reduce using rule 2 (program -> statement_list .)
+    PRINT           shift and go to state 4
+    TYPE            shift and go to state 5
+    VAR             shift and go to state 7
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+    DECREMENT       shift and go to state 14
+    ID              shift and go to state 6
+    INCREMENT       shift and go to state 15
+    FINAL           shift and go to state 16
+
+    statement                      shift and go to state 17
+    for_stmt                       shift and go to state 8
+    if_stmt                        shift and go to state 9
+    update                         shift and go to state 10
+    decl_init                      shift and go to state 11
+
+state 3
+
+    (3) statement_list -> statement .
+    PRINT           reduce using rule 3 (statement_list -> statement .)
+    TYPE            reduce using rule 3 (statement_list -> statement .)
+    VAR             reduce using rule 3 (statement_list -> statement .)
+    FOR             reduce using rule 3 (statement_list -> statement .)
+    IF              reduce using rule 3 (statement_list -> statement .)
+    DECREMENT       reduce using rule 3 (statement_list -> statement .)
+    ID              reduce using rule 3 (statement_list -> statement .)
+    INCREMENT       reduce using rule 3 (statement_list -> statement .)
+    FINAL           reduce using rule 3 (statement_list -> statement .)
+    $end            reduce using rule 3 (statement_list -> statement .)
+    RBRACE          reduce using rule 3 (statement_list -> statement .)
+
+
+state 4
+
+    (5) statement -> PRINT . LPAREN expr RPAREN SEMI
+    LPAREN          shift and go to state 18
+
+
+state 5
+
+    (6) statement -> TYPE . ID SEMI
+    (14) decl_init -> TYPE . ID ASSIGN expr
+    ID              shift and go to state 19
+
+
+state 6
+
+    (17) update -> ID . DECREMENT
+    (19) update -> ID . INCREMENT
+    (20) update -> ID . MINUSEQ expr
+    (21) update -> ID . PLUSEQ expr
+    (22) update -> ID . ASSIGN expr
+    DECREMENT       shift and go to state 20
+    INCREMENT       shift and go to state 21
+    MINUSEQ         shift and go to state 22
+    PLUSEQ          shift and go to state 23
+    ASSIGN          shift and go to state 24
+
+
+state 7
+
+    (7) statement -> VAR . ID SEMI
+    (15) decl_init -> VAR . ID ASSIGN expr
+    ID              shift and go to state 25
+
+
+state 8
+
+    (8) statement -> for_stmt .
+    PRINT           reduce using rule 8 (statement -> for_stmt .)
+    TYPE            reduce using rule 8 (statement -> for_stmt .)
+    VAR             reduce using rule 8 (statement -> for_stmt .)
+    FOR             reduce using rule 8 (statement -> for_stmt .)
+    IF              reduce using rule 8 (statement -> for_stmt .)
+    DECREMENT       reduce using rule 8 (statement -> for_stmt .)
+    ID              reduce using rule 8 (statement -> for_stmt .)
+    INCREMENT       reduce using rule 8 (statement -> for_stmt .)
+    FINAL           reduce using rule 8 (statement -> for_stmt .)
+    $end            reduce using rule 8 (statement -> for_stmt .)
+    RBRACE          reduce using rule 8 (statement -> for_stmt .)
+
+
+state 9
+
+    (9) statement -> if_stmt .
+    PRINT           reduce using rule 9 (statement -> if_stmt .)
+    TYPE            reduce using rule 9 (statement -> if_stmt .)
+    VAR             reduce using rule 9 (statement -> if_stmt .)
+    FOR             reduce using rule 9 (statement -> if_stmt .)
+    IF              reduce using rule 9 (statement -> if_stmt .)
+    DECREMENT       reduce using rule 9 (statement -> if_stmt .)
+    ID              reduce using rule 9 (statement -> if_stmt .)
+    INCREMENT       reduce using rule 9 (statement -> if_stmt .)
+    FINAL           reduce using rule 9 (statement -> if_stmt .)
+    $end            reduce using rule 9 (statement -> if_stmt .)
+    RBRACE          reduce using rule 9 (statement -> if_stmt .)
+
+
+state 10
+
+    (10) statement -> update . SEMI
+    SEMI            shift and go to state 26
+
+
+state 11
+
+    (11) statement -> decl_init . SEMI
+    SEMI            shift and go to state 27
+
+
+state 12
+
+    (35) for_stmt -> FOR . LPAREN for_init SEMI condition SEMI update RPAREN block
+    LPAREN          shift and go to state 28
+
+
+state 13
+
+    (23) if_stmt -> IF . LPAREN condition RPAREN block ELSE if_stmt
+    (24) if_stmt -> IF . LPAREN condition RPAREN block ELSE block
+    (25) if_stmt -> IF . LPAREN condition RPAREN block
+    LPAREN          shift and go to state 29
+
+
+state 14
+
+    (16) update -> DECREMENT . ID
+    ID              shift and go to state 30
+
+
+state 15
+
+    (18) update -> INCREMENT . ID
+    ID              shift and go to state 31
+
+
+state 16
+
+    (12) decl_init -> FINAL . TYPE ID ASSIGN expr
+    (13) decl_init -> FINAL . ID ASSIGN expr
+    TYPE            shift and go to state 32
+    ID              shift and go to state 33
+
+
+state 17
+
+    (4) statement_list -> statement_list statement .
+    PRINT           reduce using rule 4 (statement_list -> statement_list statement .)
+    TYPE            reduce using rule 4 (statement_list -> statement_list statement .)
+    VAR             reduce using rule 4 (statement_list -> statement_list statement .)
+    FOR             reduce using rule 4 (statement_list -> statement_list statement .)
+    IF              reduce using rule 4 (statement_list -> statement_list statement .)
+    DECREMENT       reduce using rule 4 (statement_list -> statement_list statement .)
+    ID              reduce using rule 4 (statement_list -> statement_list statement .)
+    INCREMENT       reduce using rule 4 (statement_list -> statement_list statement .)
+    FINAL           reduce using rule 4 (statement_list -> statement_list statement .)
+    $end            reduce using rule 4 (statement_list -> statement_list statement .)
+    RBRACE          reduce using rule 4 (statement_list -> statement_list statement .)
+
+
+state 18
+
+    (5) statement -> PRINT LPAREN . expr RPAREN SEMI
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 35
+
+state 19
+
+    (6) statement -> TYPE ID . SEMI
+    (14) decl_init -> TYPE ID . ASSIGN expr
+    SEMI            shift and go to state 43
+    ASSIGN          shift and go to state 44
+
+
+state 20
+
+    (17) update -> ID DECREMENT .
+    SEMI            reduce using rule 17 (update -> ID DECREMENT .)
+    RPAREN          reduce using rule 17 (update -> ID DECREMENT .)
+
+
+state 21
+
+    (19) update -> ID INCREMENT .
+    SEMI            reduce using rule 19 (update -> ID INCREMENT .)
+    RPAREN          reduce using rule 19 (update -> ID INCREMENT .)
+
+
+state 22
+
+    (20) update -> ID MINUSEQ . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 45
+
+state 23
+
+    (21) update -> ID PLUSEQ . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 46
+
+state 24
+
+    (22) update -> ID ASSIGN . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 47
+
+state 25
+
+    (7) statement -> VAR ID . SEMI
+    (15) decl_init -> VAR ID . ASSIGN expr
+    SEMI            shift and go to state 48
+    ASSIGN          shift and go to state 49
+
+
+state 26
+
+    (10) statement -> update SEMI .
+    PRINT           reduce using rule 10 (statement -> update SEMI .)
+    TYPE            reduce using rule 10 (statement -> update SEMI .)
+    VAR             reduce using rule 10 (statement -> update SEMI .)
+    FOR             reduce using rule 10 (statement -> update SEMI .)
+    IF              reduce using rule 10 (statement -> update SEMI .)
+    DECREMENT       reduce using rule 10 (statement -> update SEMI .)
+    ID              reduce using rule 10 (statement -> update SEMI .)
+    INCREMENT       reduce using rule 10 (statement -> update SEMI .)
+    FINAL           reduce using rule 10 (statement -> update SEMI .)
+    $end            reduce using rule 10 (statement -> update SEMI .)
+    RBRACE          reduce using rule 10 (statement -> update SEMI .)
+
+
+state 27
+
+    (11) statement -> decl_init SEMI .
+    PRINT           reduce using rule 11 (statement -> decl_init SEMI .)
+    TYPE            reduce using rule 11 (statement -> decl_init SEMI .)
+    VAR             reduce using rule 11 (statement -> decl_init SEMI .)
+    FOR             reduce using rule 11 (statement -> decl_init SEMI .)
+    IF              reduce using rule 11 (statement -> decl_init SEMI .)
+    DECREMENT       reduce using rule 11 (statement -> decl_init SEMI .)
+    ID              reduce using rule 11 (statement -> decl_init SEMI .)
+    INCREMENT       reduce using rule 11 (statement -> decl_init SEMI .)
+    FINAL           reduce using rule 11 (statement -> decl_init SEMI .)
+    $end            reduce using rule 11 (statement -> decl_init SEMI .)
+    RBRACE          reduce using rule 11 (statement -> decl_init SEMI .)
+
+
+state 28
+
+    (35) for_stmt -> FOR LPAREN . for_init SEMI condition SEMI update RPAREN block
+    (36) for_init -> . update
+    (37) for_init -> . decl_init
+    (16) update -> . DECREMENT ID
+    (17) update -> . ID DECREMENT
+    (18) update -> . INCREMENT ID
+    (19) update -> . ID INCREMENT
+    (20) update -> . ID MINUSEQ expr
+    (21) update -> . ID PLUSEQ expr
+    (22) update -> . ID ASSIGN expr
+    (12) decl_init -> . FINAL TYPE ID ASSIGN expr
+    (13) decl_init -> . FINAL ID ASSIGN expr
+    (14) decl_init -> . TYPE ID ASSIGN expr
+    (15) decl_init -> . VAR ID ASSIGN expr
+    DECREMENT       shift and go to state 14
+    ID              shift and go to state 6
+    INCREMENT       shift and go to state 15
+    FINAL           shift and go to state 16
+    TYPE            shift and go to state 53
+    VAR             shift and go to state 54
+
+    for_init                       shift and go to state 50
+    update                         shift and go to state 51
+    decl_init                      shift and go to state 52
+
+state 29
+
+    (23) if_stmt -> IF LPAREN . condition RPAREN block ELSE if_stmt
+    (24) if_stmt -> IF LPAREN . condition RPAREN block ELSE block
+    (25) if_stmt -> IF LPAREN . condition RPAREN block
+    (28) condition -> . expr comp_op expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    condition                      shift and go to state 55
+    expr                           shift and go to state 56
+
+state 30
+
+    (16) update -> DECREMENT ID .
+    SEMI            reduce using rule 16 (update -> DECREMENT ID .)
+    RPAREN          reduce using rule 16 (update -> DECREMENT ID .)
+
+
+state 31
+
+    (18) update -> INCREMENT ID .
+    SEMI            reduce using rule 18 (update -> INCREMENT ID .)
+    RPAREN          reduce using rule 18 (update -> INCREMENT ID .)
+
+
+state 32
+
+    (12) decl_init -> FINAL TYPE . ID ASSIGN expr
+    ID              shift and go to state 57
+
+
+state 33
+
+    (13) decl_init -> FINAL ID . ASSIGN expr
+    ASSIGN          shift and go to state 58
+
+
+state 34
+
+    (44) expr -> LPAREN . expr RPAREN
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 59
+
+state 35
+
+    (5) statement -> PRINT LPAREN expr . RPAREN SEMI
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          shift and go to state 60
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 36
+
+    (38) expr -> ID .
+    RPAREN          reduce using rule 38 (expr -> ID .)
+    MOD             reduce using rule 38 (expr -> ID .)
+    DIVIDE          reduce using rule 38 (expr -> ID .)
+    TIMES           reduce using rule 38 (expr -> ID .)
+    MINUS           reduce using rule 38 (expr -> ID .)
+    PLUS            reduce using rule 38 (expr -> ID .)
+    SEMI            reduce using rule 38 (expr -> ID .)
+    GE              reduce using rule 38 (expr -> ID .)
+    GT              reduce using rule 38 (expr -> ID .)
+    LE              reduce using rule 38 (expr -> ID .)
+    LT              reduce using rule 38 (expr -> ID .)
+    NE              reduce using rule 38 (expr -> ID .)
+    EQ              reduce using rule 38 (expr -> ID .)
+
+
+state 37
+
+    (39) expr -> FALSE .
+    RPAREN          reduce using rule 39 (expr -> FALSE .)
+    MOD             reduce using rule 39 (expr -> FALSE .)
+    DIVIDE          reduce using rule 39 (expr -> FALSE .)
+    TIMES           reduce using rule 39 (expr -> FALSE .)
+    MINUS           reduce using rule 39 (expr -> FALSE .)
+    PLUS            reduce using rule 39 (expr -> FALSE .)
+    SEMI            reduce using rule 39 (expr -> FALSE .)
+    GE              reduce using rule 39 (expr -> FALSE .)
+    GT              reduce using rule 39 (expr -> FALSE .)
+    LE              reduce using rule 39 (expr -> FALSE .)
+    LT              reduce using rule 39 (expr -> FALSE .)
+    NE              reduce using rule 39 (expr -> FALSE .)
+    EQ              reduce using rule 39 (expr -> FALSE .)
+
+
+state 38
+
+    (40) expr -> TRUE .
+    RPAREN          reduce using rule 40 (expr -> TRUE .)
+    MOD             reduce using rule 40 (expr -> TRUE .)
+    DIVIDE          reduce using rule 40 (expr -> TRUE .)
+    TIMES           reduce using rule 40 (expr -> TRUE .)
+    MINUS           reduce using rule 40 (expr -> TRUE .)
+    PLUS            reduce using rule 40 (expr -> TRUE .)
+    SEMI            reduce using rule 40 (expr -> TRUE .)
+    GE              reduce using rule 40 (expr -> TRUE .)
+    GT              reduce using rule 40 (expr -> TRUE .)
+    LE              reduce using rule 40 (expr -> TRUE .)
+    LT              reduce using rule 40 (expr -> TRUE .)
+    NE              reduce using rule 40 (expr -> TRUE .)
+    EQ              reduce using rule 40 (expr -> TRUE .)
+
+
+state 39
+
+    (41) expr -> STRING_LIT .
+    RPAREN          reduce using rule 41 (expr -> STRING_LIT .)
+    MOD             reduce using rule 41 (expr -> STRING_LIT .)
+    DIVIDE          reduce using rule 41 (expr -> STRING_LIT .)
+    TIMES           reduce using rule 41 (expr -> STRING_LIT .)
+    MINUS           reduce using rule 41 (expr -> STRING_LIT .)
+    PLUS            reduce using rule 41 (expr -> STRING_LIT .)
+    SEMI            reduce using rule 41 (expr -> STRING_LIT .)
+    GE              reduce using rule 41 (expr -> STRING_LIT .)
+    GT              reduce using rule 41 (expr -> STRING_LIT .)
+    LE              reduce using rule 41 (expr -> STRING_LIT .)
+    LT              reduce using rule 41 (expr -> STRING_LIT .)
+    NE              reduce using rule 41 (expr -> STRING_LIT .)
+    EQ              reduce using rule 41 (expr -> STRING_LIT .)
+
+
+state 40
+
+    (42) expr -> DOUBLE_LIT .
+    RPAREN          reduce using rule 42 (expr -> DOUBLE_LIT .)
+    MOD             reduce using rule 42 (expr -> DOUBLE_LIT .)
+    DIVIDE          reduce using rule 42 (expr -> DOUBLE_LIT .)
+    TIMES           reduce using rule 42 (expr -> DOUBLE_LIT .)
+    MINUS           reduce using rule 42 (expr -> DOUBLE_LIT .)
+    PLUS            reduce using rule 42 (expr -> DOUBLE_LIT .)
+    SEMI            reduce using rule 42 (expr -> DOUBLE_LIT .)
+    GE              reduce using rule 42 (expr -> DOUBLE_LIT .)
+    GT              reduce using rule 42 (expr -> DOUBLE_LIT .)
+    LE              reduce using rule 42 (expr -> DOUBLE_LIT .)
+    LT              reduce using rule 42 (expr -> DOUBLE_LIT .)
+    NE              reduce using rule 42 (expr -> DOUBLE_LIT .)
+    EQ              reduce using rule 42 (expr -> DOUBLE_LIT .)
+
+
+state 41
+
+    (43) expr -> INT_LIT .
+    RPAREN          reduce using rule 43 (expr -> INT_LIT .)
+    MOD             reduce using rule 43 (expr -> INT_LIT .)
+    DIVIDE          reduce using rule 43 (expr -> INT_LIT .)
+    TIMES           reduce using rule 43 (expr -> INT_LIT .)
+    MINUS           reduce using rule 43 (expr -> INT_LIT .)
+    PLUS            reduce using rule 43 (expr -> INT_LIT .)
+    SEMI            reduce using rule 43 (expr -> INT_LIT .)
+    GE              reduce using rule 43 (expr -> INT_LIT .)
+    GT              reduce using rule 43 (expr -> INT_LIT .)
+    LE              reduce using rule 43 (expr -> INT_LIT .)
+    LT              reduce using rule 43 (expr -> INT_LIT .)
+    NE              reduce using rule 43 (expr -> INT_LIT .)
+    EQ              reduce using rule 43 (expr -> INT_LIT .)
+
+
+state 42
+
+    (45) expr -> MINUS . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 66
+
+state 43
+
+    (6) statement -> TYPE ID SEMI .
+    PRINT           reduce using rule 6 (statement -> TYPE ID SEMI .)
+    TYPE            reduce using rule 6 (statement -> TYPE ID SEMI .)
+    VAR             reduce using rule 6 (statement -> TYPE ID SEMI .)
+    FOR             reduce using rule 6 (statement -> TYPE ID SEMI .)
+    IF              reduce using rule 6 (statement -> TYPE ID SEMI .)
+    DECREMENT       reduce using rule 6 (statement -> TYPE ID SEMI .)
+    ID              reduce using rule 6 (statement -> TYPE ID SEMI .)
+    INCREMENT       reduce using rule 6 (statement -> TYPE ID SEMI .)
+    FINAL           reduce using rule 6 (statement -> TYPE ID SEMI .)
+    $end            reduce using rule 6 (statement -> TYPE ID SEMI .)
+    RBRACE          reduce using rule 6 (statement -> TYPE ID SEMI .)
+
+
+state 44
+
+    (14) decl_init -> TYPE ID ASSIGN . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 67
+
+state 45
+
+    (20) update -> ID MINUSEQ expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    SEMI            reduce using rule 20 (update -> ID MINUSEQ expr .)
+    RPAREN          reduce using rule 20 (update -> ID MINUSEQ expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 46
+
+    (21) update -> ID PLUSEQ expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    SEMI            reduce using rule 21 (update -> ID PLUSEQ expr .)
+    RPAREN          reduce using rule 21 (update -> ID PLUSEQ expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 47
+
+    (22) update -> ID ASSIGN expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    SEMI            reduce using rule 22 (update -> ID ASSIGN expr .)
+    RPAREN          reduce using rule 22 (update -> ID ASSIGN expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 48
+
+    (7) statement -> VAR ID SEMI .
+    PRINT           reduce using rule 7 (statement -> VAR ID SEMI .)
+    TYPE            reduce using rule 7 (statement -> VAR ID SEMI .)
+    VAR             reduce using rule 7 (statement -> VAR ID SEMI .)
+    FOR             reduce using rule 7 (statement -> VAR ID SEMI .)
+    IF              reduce using rule 7 (statement -> VAR ID SEMI .)
+    DECREMENT       reduce using rule 7 (statement -> VAR ID SEMI .)
+    ID              reduce using rule 7 (statement -> VAR ID SEMI .)
+    INCREMENT       reduce using rule 7 (statement -> VAR ID SEMI .)
+    FINAL           reduce using rule 7 (statement -> VAR ID SEMI .)
+    $end            reduce using rule 7 (statement -> VAR ID SEMI .)
+    RBRACE          reduce using rule 7 (statement -> VAR ID SEMI .)
+
+
+state 49
+
+    (15) decl_init -> VAR ID ASSIGN . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 68
+
+state 50
+
+    (35) for_stmt -> FOR LPAREN for_init . SEMI condition SEMI update RPAREN block
+    SEMI            shift and go to state 69
+
+
+state 51
+
+    (36) for_init -> update .
+    SEMI            reduce using rule 36 (for_init -> update .)
+
+
+state 52
+
+    (37) for_init -> decl_init .
+    SEMI            reduce using rule 37 (for_init -> decl_init .)
+
+
+state 53
+
+    (14) decl_init -> TYPE . ID ASSIGN expr
+    ID              shift and go to state 70
+
+
+state 54
+
+    (15) decl_init -> VAR . ID ASSIGN expr
+    ID              shift and go to state 71
+
+
+state 55
+
+    (23) if_stmt -> IF LPAREN condition . RPAREN block ELSE if_stmt
+    (24) if_stmt -> IF LPAREN condition . RPAREN block ELSE block
+    (25) if_stmt -> IF LPAREN condition . RPAREN block
+    RPAREN          shift and go to state 72
+
+
+state 56
+
+    (28) condition -> expr . comp_op expr
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    (29) comp_op -> . GE
+    (30) comp_op -> . GT
+    (31) comp_op -> . LE
+    (32) comp_op -> . LT
+    (33) comp_op -> . NE
+    (34) comp_op -> . EQ
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+    GE              shift and go to state 74
+    GT              shift and go to state 75
+    LE              shift and go to state 76
+    LT              shift and go to state 77
+    NE              shift and go to state 78
+    EQ              shift and go to state 79
+
+    comp_op                        shift and go to state 73
+
+state 57
+
+    (12) decl_init -> FINAL TYPE ID . ASSIGN expr
+    ASSIGN          shift and go to state 80
+
+
+state 58
+
+    (13) decl_init -> FINAL ID ASSIGN . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 81
+
+state 59
+
+    (44) expr -> LPAREN expr . RPAREN
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          shift and go to state 82
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 60
+
+    (5) statement -> PRINT LPAREN expr RPAREN . SEMI
+    SEMI            shift and go to state 83
+
+
+state 61
+
+    (46) expr -> expr MOD . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 84
+
+state 62
+
+    (47) expr -> expr DIVIDE . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 85
+
+state 63
+
+    (48) expr -> expr TIMES . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 86
+
+state 64
+
+    (49) expr -> expr MINUS . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 87
+
+state 65
+
+    (50) expr -> expr PLUS . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 88
+
+state 66
+
+    (45) expr -> MINUS expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          reduce using rule 45 (expr -> MINUS expr .)
+    MOD             reduce using rule 45 (expr -> MINUS expr .)
+    DIVIDE          reduce using rule 45 (expr -> MINUS expr .)
+    TIMES           reduce using rule 45 (expr -> MINUS expr .)
+    MINUS           reduce using rule 45 (expr -> MINUS expr .)
+    PLUS            reduce using rule 45 (expr -> MINUS expr .)
+    SEMI            reduce using rule 45 (expr -> MINUS expr .)
+    GE              reduce using rule 45 (expr -> MINUS expr .)
+    GT              reduce using rule 45 (expr -> MINUS expr .)
+    LE              reduce using rule 45 (expr -> MINUS expr .)
+    LT              reduce using rule 45 (expr -> MINUS expr .)
+    NE              reduce using rule 45 (expr -> MINUS expr .)
+    EQ              reduce using rule 45 (expr -> MINUS expr .)
+
+
+state 67
+
+    (14) decl_init -> TYPE ID ASSIGN expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    SEMI            reduce using rule 14 (decl_init -> TYPE ID ASSIGN expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 68
+
+    (15) decl_init -> VAR ID ASSIGN expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    SEMI            reduce using rule 15 (decl_init -> VAR ID ASSIGN expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 69
+
+    (35) for_stmt -> FOR LPAREN for_init SEMI . condition SEMI update RPAREN block
+    (28) condition -> . expr comp_op expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    condition                      shift and go to state 89
+    expr                           shift and go to state 56
+
+state 70
+
+    (14) decl_init -> TYPE ID . ASSIGN expr
+    ASSIGN          shift and go to state 44
+
+
+state 71
+
+    (15) decl_init -> VAR ID . ASSIGN expr
+    ASSIGN          shift and go to state 49
+
+
+state 72
+
+    (23) if_stmt -> IF LPAREN condition RPAREN . block ELSE if_stmt
+    (24) if_stmt -> IF LPAREN condition RPAREN . block ELSE block
+    (25) if_stmt -> IF LPAREN condition RPAREN . block
+    (26) block -> . LBRACE RBRACE
+    (27) block -> . LBRACE statement_list RBRACE
+    LBRACE          shift and go to state 91
+
+    block                          shift and go to state 90
+
+state 73
+
+    (28) condition -> expr comp_op . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 92
+
+state 74
+
+    (29) comp_op -> GE .
+    ID              reduce using rule 29 (comp_op -> GE .)
+    FALSE           reduce using rule 29 (comp_op -> GE .)
+    TRUE            reduce using rule 29 (comp_op -> GE .)
+    STRING_LIT      reduce using rule 29 (comp_op -> GE .)
+    DOUBLE_LIT      reduce using rule 29 (comp_op -> GE .)
+    INT_LIT         reduce using rule 29 (comp_op -> GE .)
+    LPAREN          reduce using rule 29 (comp_op -> GE .)
+    MINUS           reduce using rule 29 (comp_op -> GE .)
+
+
+state 75
+
+    (30) comp_op -> GT .
+    ID              reduce using rule 30 (comp_op -> GT .)
+    FALSE           reduce using rule 30 (comp_op -> GT .)
+    TRUE            reduce using rule 30 (comp_op -> GT .)
+    STRING_LIT      reduce using rule 30 (comp_op -> GT .)
+    DOUBLE_LIT      reduce using rule 30 (comp_op -> GT .)
+    INT_LIT         reduce using rule 30 (comp_op -> GT .)
+    LPAREN          reduce using rule 30 (comp_op -> GT .)
+    MINUS           reduce using rule 30 (comp_op -> GT .)
+
+
+state 76
+
+    (31) comp_op -> LE .
+    ID              reduce using rule 31 (comp_op -> LE .)
+    FALSE           reduce using rule 31 (comp_op -> LE .)
+    TRUE            reduce using rule 31 (comp_op -> LE .)
+    STRING_LIT      reduce using rule 31 (comp_op -> LE .)
+    DOUBLE_LIT      reduce using rule 31 (comp_op -> LE .)
+    INT_LIT         reduce using rule 31 (comp_op -> LE .)
+    LPAREN          reduce using rule 31 (comp_op -> LE .)
+    MINUS           reduce using rule 31 (comp_op -> LE .)
+
+
+state 77
+
+    (32) comp_op -> LT .
+    ID              reduce using rule 32 (comp_op -> LT .)
+    FALSE           reduce using rule 32 (comp_op -> LT .)
+    TRUE            reduce using rule 32 (comp_op -> LT .)
+    STRING_LIT      reduce using rule 32 (comp_op -> LT .)
+    DOUBLE_LIT      reduce using rule 32 (comp_op -> LT .)
+    INT_LIT         reduce using rule 32 (comp_op -> LT .)
+    LPAREN          reduce using rule 32 (comp_op -> LT .)
+    MINUS           reduce using rule 32 (comp_op -> LT .)
+
+
+state 78
+
+    (33) comp_op -> NE .
+    ID              reduce using rule 33 (comp_op -> NE .)
+    FALSE           reduce using rule 33 (comp_op -> NE .)
+    TRUE            reduce using rule 33 (comp_op -> NE .)
+    STRING_LIT      reduce using rule 33 (comp_op -> NE .)
+    DOUBLE_LIT      reduce using rule 33 (comp_op -> NE .)
+    INT_LIT         reduce using rule 33 (comp_op -> NE .)
+    LPAREN          reduce using rule 33 (comp_op -> NE .)
+    MINUS           reduce using rule 33 (comp_op -> NE .)
+
+
+state 79
+
+    (34) comp_op -> EQ .
+    ID              reduce using rule 34 (comp_op -> EQ .)
+    FALSE           reduce using rule 34 (comp_op -> EQ .)
+    TRUE            reduce using rule 34 (comp_op -> EQ .)
+    STRING_LIT      reduce using rule 34 (comp_op -> EQ .)
+    DOUBLE_LIT      reduce using rule 34 (comp_op -> EQ .)
+    INT_LIT         reduce using rule 34 (comp_op -> EQ .)
+    LPAREN          reduce using rule 34 (comp_op -> EQ .)
+    MINUS           reduce using rule 34 (comp_op -> EQ .)
+
+
+state 80
+
+    (12) decl_init -> FINAL TYPE ID ASSIGN . expr
+    (38) expr -> . ID
+    (39) expr -> . FALSE
+    (40) expr -> . TRUE
+    (41) expr -> . STRING_LIT
+    (42) expr -> . DOUBLE_LIT
+    (43) expr -> . INT_LIT
+    (44) expr -> . LPAREN expr RPAREN
+    (45) expr -> . MINUS expr
+    (46) expr -> . expr MOD expr
+    (47) expr -> . expr DIVIDE expr
+    (48) expr -> . expr TIMES expr
+    (49) expr -> . expr MINUS expr
+    (50) expr -> . expr PLUS expr
+    ID              shift and go to state 36
+    FALSE           shift and go to state 37
+    TRUE            shift and go to state 38
+    STRING_LIT      shift and go to state 39
+    DOUBLE_LIT      shift and go to state 40
+    INT_LIT         shift and go to state 41
+    LPAREN          shift and go to state 34
+    MINUS           shift and go to state 42
+
+    expr                           shift and go to state 93
+
+state 81
+
+    (13) decl_init -> FINAL ID ASSIGN expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    SEMI            reduce using rule 13 (decl_init -> FINAL ID ASSIGN expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 82
+
+    (44) expr -> LPAREN expr RPAREN .
+    RPAREN          reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    MOD             reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    TIMES           reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    SEMI            reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    GE              reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    GT              reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    LE              reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    LT              reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    NE              reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+    EQ              reduce using rule 44 (expr -> LPAREN expr RPAREN .)
+
+
+state 83
+
+    (5) statement -> PRINT LPAREN expr RPAREN SEMI .
+    PRINT           reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    TYPE            reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    VAR             reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    FOR             reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    IF              reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    DECREMENT       reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    ID              reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    INCREMENT       reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    FINAL           reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    $end            reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+    RBRACE          reduce using rule 5 (statement -> PRINT LPAREN expr RPAREN SEMI .)
+
+
+state 84
+
+    (46) expr -> expr MOD expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          reduce using rule 46 (expr -> expr MOD expr .)
+    MOD             reduce using rule 46 (expr -> expr MOD expr .)
+    DIVIDE          reduce using rule 46 (expr -> expr MOD expr .)
+    TIMES           reduce using rule 46 (expr -> expr MOD expr .)
+    MINUS           reduce using rule 46 (expr -> expr MOD expr .)
+    PLUS            reduce using rule 46 (expr -> expr MOD expr .)
+    SEMI            reduce using rule 46 (expr -> expr MOD expr .)
+    GE              reduce using rule 46 (expr -> expr MOD expr .)
+    GT              reduce using rule 46 (expr -> expr MOD expr .)
+    LE              reduce using rule 46 (expr -> expr MOD expr .)
+    LT              reduce using rule 46 (expr -> expr MOD expr .)
+    NE              reduce using rule 46 (expr -> expr MOD expr .)
+    EQ              reduce using rule 46 (expr -> expr MOD expr .)
+
+
+state 85
+
+    (47) expr -> expr DIVIDE expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          reduce using rule 47 (expr -> expr DIVIDE expr .)
+    MOD             reduce using rule 47 (expr -> expr DIVIDE expr .)
+    DIVIDE          reduce using rule 47 (expr -> expr DIVIDE expr .)
+    TIMES           reduce using rule 47 (expr -> expr DIVIDE expr .)
+    MINUS           reduce using rule 47 (expr -> expr DIVIDE expr .)
+    PLUS            reduce using rule 47 (expr -> expr DIVIDE expr .)
+    SEMI            reduce using rule 47 (expr -> expr DIVIDE expr .)
+    GE              reduce using rule 47 (expr -> expr DIVIDE expr .)
+    GT              reduce using rule 47 (expr -> expr DIVIDE expr .)
+    LE              reduce using rule 47 (expr -> expr DIVIDE expr .)
+    LT              reduce using rule 47 (expr -> expr DIVIDE expr .)
+    NE              reduce using rule 47 (expr -> expr DIVIDE expr .)
+    EQ              reduce using rule 47 (expr -> expr DIVIDE expr .)
+
+
+state 86
+
+    (48) expr -> expr TIMES expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          reduce using rule 48 (expr -> expr TIMES expr .)
+    MOD             reduce using rule 48 (expr -> expr TIMES expr .)
+    DIVIDE          reduce using rule 48 (expr -> expr TIMES expr .)
+    TIMES           reduce using rule 48 (expr -> expr TIMES expr .)
+    MINUS           reduce using rule 48 (expr -> expr TIMES expr .)
+    PLUS            reduce using rule 48 (expr -> expr TIMES expr .)
+    SEMI            reduce using rule 48 (expr -> expr TIMES expr .)
+    GE              reduce using rule 48 (expr -> expr TIMES expr .)
+    GT              reduce using rule 48 (expr -> expr TIMES expr .)
+    LE              reduce using rule 48 (expr -> expr TIMES expr .)
+    LT              reduce using rule 48 (expr -> expr TIMES expr .)
+    NE              reduce using rule 48 (expr -> expr TIMES expr .)
+    EQ              reduce using rule 48 (expr -> expr TIMES expr .)
+
+
+state 87
+
+    (49) expr -> expr MINUS expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          reduce using rule 49 (expr -> expr MINUS expr .)
+    MINUS           reduce using rule 49 (expr -> expr MINUS expr .)
+    PLUS            reduce using rule 49 (expr -> expr MINUS expr .)
+    SEMI            reduce using rule 49 (expr -> expr MINUS expr .)
+    GE              reduce using rule 49 (expr -> expr MINUS expr .)
+    GT              reduce using rule 49 (expr -> expr MINUS expr .)
+    LE              reduce using rule 49 (expr -> expr MINUS expr .)
+    LT              reduce using rule 49 (expr -> expr MINUS expr .)
+    NE              reduce using rule 49 (expr -> expr MINUS expr .)
+    EQ              reduce using rule 49 (expr -> expr MINUS expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+
+
+state 88
+
+    (50) expr -> expr PLUS expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          reduce using rule 50 (expr -> expr PLUS expr .)
+    MINUS           reduce using rule 50 (expr -> expr PLUS expr .)
+    PLUS            reduce using rule 50 (expr -> expr PLUS expr .)
+    SEMI            reduce using rule 50 (expr -> expr PLUS expr .)
+    GE              reduce using rule 50 (expr -> expr PLUS expr .)
+    GT              reduce using rule 50 (expr -> expr PLUS expr .)
+    LE              reduce using rule 50 (expr -> expr PLUS expr .)
+    LT              reduce using rule 50 (expr -> expr PLUS expr .)
+    NE              reduce using rule 50 (expr -> expr PLUS expr .)
+    EQ              reduce using rule 50 (expr -> expr PLUS expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+
+
+state 89
+
+    (35) for_stmt -> FOR LPAREN for_init SEMI condition . SEMI update RPAREN block
+    SEMI            shift and go to state 94
+
+
+state 90
+
+    (23) if_stmt -> IF LPAREN condition RPAREN block . ELSE if_stmt
+    (24) if_stmt -> IF LPAREN condition RPAREN block . ELSE block
+    (25) if_stmt -> IF LPAREN condition RPAREN block .
+    ELSE            shift and go to state 95
+    PRINT           reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    TYPE            reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    VAR             reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    FOR             reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    IF              reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    DECREMENT       reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    ID              reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    INCREMENT       reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    FINAL           reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    $end            reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+    RBRACE          reduce using rule 25 (if_stmt -> IF LPAREN condition RPAREN block .)
+
+
+state 91
+
+    (26) block -> LBRACE . RBRACE
+    (27) block -> LBRACE . statement_list RBRACE
+    (3) statement_list -> . statement
+    (4) statement_list -> . statement_list statement
+    (5) statement -> . PRINT LPAREN expr RPAREN SEMI
+    (6) statement -> . TYPE ID SEMI
+    (7) statement -> . VAR ID SEMI
+    (8) statement -> . for_stmt
+    (9) statement -> . if_stmt
+    (10) statement -> . update SEMI
+    (11) statement -> . decl_init SEMI
+    (35) for_stmt -> . FOR LPAREN for_init SEMI condition SEMI update RPAREN block
+    (23) if_stmt -> . IF LPAREN condition RPAREN block ELSE if_stmt
+    (24) if_stmt -> . IF LPAREN condition RPAREN block ELSE block
+    (25) if_stmt -> . IF LPAREN condition RPAREN block
+    (16) update -> . DECREMENT ID
+    (17) update -> . ID DECREMENT
+    (18) update -> . INCREMENT ID
+    (19) update -> . ID INCREMENT
+    (20) update -> . ID MINUSEQ expr
+    (21) update -> . ID PLUSEQ expr
+    (22) update -> . ID ASSIGN expr
+    (12) decl_init -> . FINAL TYPE ID ASSIGN expr
+    (13) decl_init -> . FINAL ID ASSIGN expr
+    (14) decl_init -> . TYPE ID ASSIGN expr
+    (15) decl_init -> . VAR ID ASSIGN expr
+    RBRACE          shift and go to state 96
+    PRINT           shift and go to state 4
+    TYPE            shift and go to state 5
+    VAR             shift and go to state 7
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+    DECREMENT       shift and go to state 14
+    ID              shift and go to state 6
+    INCREMENT       shift and go to state 15
+    FINAL           shift and go to state 16
+
+    statement_list                 shift and go to state 97
+    statement                      shift and go to state 3
+    for_stmt                       shift and go to state 8
+    if_stmt                        shift and go to state 9
+    update                         shift and go to state 10
+    decl_init                      shift and go to state 11
+
+state 92
+
+    (28) condition -> expr comp_op expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    RPAREN          reduce using rule 28 (condition -> expr comp_op expr .)
+    SEMI            reduce using rule 28 (condition -> expr comp_op expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 93
+
+    (12) decl_init -> FINAL TYPE ID ASSIGN expr .
+    (46) expr -> expr . MOD expr
+    (47) expr -> expr . DIVIDE expr
+    (48) expr -> expr . TIMES expr
+    (49) expr -> expr . MINUS expr
+    (50) expr -> expr . PLUS expr
+    SEMI            reduce using rule 12 (decl_init -> FINAL TYPE ID ASSIGN expr .)
+    MOD             shift and go to state 61
+    DIVIDE          shift and go to state 62
+    TIMES           shift and go to state 63
+    MINUS           shift and go to state 64
+    PLUS            shift and go to state 65
+
+
+state 94
+
+    (35) for_stmt -> FOR LPAREN for_init SEMI condition SEMI . update RPAREN block
+    (16) update -> . DECREMENT ID
+    (17) update -> . ID DECREMENT
+    (18) update -> . INCREMENT ID
+    (19) update -> . ID INCREMENT
+    (20) update -> . ID MINUSEQ expr
+    (21) update -> . ID PLUSEQ expr
+    (22) update -> . ID ASSIGN expr
+    DECREMENT       shift and go to state 14
+    ID              shift and go to state 6
+    INCREMENT       shift and go to state 15
+
+    update                         shift and go to state 98
+
+state 95
+
+    (23) if_stmt -> IF LPAREN condition RPAREN block ELSE . if_stmt
+    (24) if_stmt -> IF LPAREN condition RPAREN block ELSE . block
+    (23) if_stmt -> . IF LPAREN condition RPAREN block ELSE if_stmt
+    (24) if_stmt -> . IF LPAREN condition RPAREN block ELSE block
+    (25) if_stmt -> . IF LPAREN condition RPAREN block
+    (26) block -> . LBRACE RBRACE
+    (27) block -> . LBRACE statement_list RBRACE
+    IF              shift and go to state 13
+    LBRACE          shift and go to state 91
+
+    block                          shift and go to state 99
+    if_stmt                        shift and go to state 100
+
+state 96
+
+    (26) block -> LBRACE RBRACE .
+    ELSE            reduce using rule 26 (block -> LBRACE RBRACE .)
+    PRINT           reduce using rule 26 (block -> LBRACE RBRACE .)
+    TYPE            reduce using rule 26 (block -> LBRACE RBRACE .)
+    VAR             reduce using rule 26 (block -> LBRACE RBRACE .)
+    FOR             reduce using rule 26 (block -> LBRACE RBRACE .)
+    IF              reduce using rule 26 (block -> LBRACE RBRACE .)
+    DECREMENT       reduce using rule 26 (block -> LBRACE RBRACE .)
+    ID              reduce using rule 26 (block -> LBRACE RBRACE .)
+    INCREMENT       reduce using rule 26 (block -> LBRACE RBRACE .)
+    FINAL           reduce using rule 26 (block -> LBRACE RBRACE .)
+    $end            reduce using rule 26 (block -> LBRACE RBRACE .)
+    RBRACE          reduce using rule 26 (block -> LBRACE RBRACE .)
+
+
+state 97
+
+    (27) block -> LBRACE statement_list . RBRACE
+    (4) statement_list -> statement_list . statement
+    (5) statement -> . PRINT LPAREN expr RPAREN SEMI
+    (6) statement -> . TYPE ID SEMI
+    (7) statement -> . VAR ID SEMI
+    (8) statement -> . for_stmt
+    (9) statement -> . if_stmt
+    (10) statement -> . update SEMI
+    (11) statement -> . decl_init SEMI
+    (35) for_stmt -> . FOR LPAREN for_init SEMI condition SEMI update RPAREN block
+    (23) if_stmt -> . IF LPAREN condition RPAREN block ELSE if_stmt
+    (24) if_stmt -> . IF LPAREN condition RPAREN block ELSE block
+    (25) if_stmt -> . IF LPAREN condition RPAREN block
+    (16) update -> . DECREMENT ID
+    (17) update -> . ID DECREMENT
+    (18) update -> . INCREMENT ID
+    (19) update -> . ID INCREMENT
+    (20) update -> . ID MINUSEQ expr
+    (21) update -> . ID PLUSEQ expr
+    (22) update -> . ID ASSIGN expr
+    (12) decl_init -> . FINAL TYPE ID ASSIGN expr
+    (13) decl_init -> . FINAL ID ASSIGN expr
+    (14) decl_init -> . TYPE ID ASSIGN expr
+    (15) decl_init -> . VAR ID ASSIGN expr
+    RBRACE          shift and go to state 101
+    PRINT           shift and go to state 4
+    TYPE            shift and go to state 5
+    VAR             shift and go to state 7
+    FOR             shift and go to state 12
+    IF              shift and go to state 13
+    DECREMENT       shift and go to state 14
+    ID              shift and go to state 6
+    INCREMENT       shift and go to state 15
+    FINAL           shift and go to state 16
+
+    statement                      shift and go to state 17
+    for_stmt                       shift and go to state 8
+    if_stmt                        shift and go to state 9
+    update                         shift and go to state 10
+    decl_init                      shift and go to state 11
+
+state 98
+
+    (35) for_stmt -> FOR LPAREN for_init SEMI condition SEMI update . RPAREN block
+    RPAREN          shift and go to state 102
+
+
+state 99
+
+    (24) if_stmt -> IF LPAREN condition RPAREN block ELSE block .
+    PRINT           reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    TYPE            reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    VAR             reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    FOR             reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    IF              reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    DECREMENT       reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    ID              reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    INCREMENT       reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    FINAL           reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    $end            reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+    RBRACE          reduce using rule 24 (if_stmt -> IF LPAREN condition RPAREN block ELSE block .)
+
+
+state 100
+
+    (23) if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .
+    PRINT           reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    TYPE            reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    VAR             reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    FOR             reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    IF              reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    DECREMENT       reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    ID              reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    INCREMENT       reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    FINAL           reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    $end            reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+    RBRACE          reduce using rule 23 (if_stmt -> IF LPAREN condition RPAREN block ELSE if_stmt .)
+
+
+state 101
+
+    (27) block -> LBRACE statement_list RBRACE .
+    ELSE            reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    PRINT           reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    TYPE            reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    VAR             reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    FOR             reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    IF              reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    DECREMENT       reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    ID              reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    INCREMENT       reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    FINAL           reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    $end            reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+    RBRACE          reduce using rule 27 (block -> LBRACE statement_list RBRACE .)
+
+
+state 102
+
+    (35) for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN . block
+    (26) block -> . LBRACE RBRACE
+    (27) block -> . LBRACE statement_list RBRACE
+    LBRACE          shift and go to state 91
+
+    block                          shift and go to state 103
+
+state 103
+
+    (35) for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .
+    PRINT           reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    TYPE            reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    VAR             reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    FOR             reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    IF              reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    DECREMENT       reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    ID              reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    INCREMENT       reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    FINAL           reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    $end            reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)
+    RBRACE          reduce using rule 35 (for_stmt -> FOR LPAREN for_init SEMI condition SEMI update RPAREN block .)

@@ -1,0 +1,12 @@
+/* Tarefa 2: print
+   (comentário de bloco) */
+print("Olá, mundo!");
+print('aspas simples');
+print(42);
+print(3.5 * 2);
+print(10 / 4);
+print(true);
+
+String a = "Linguagens ";
+String b = "Formais";
+print(a + b);

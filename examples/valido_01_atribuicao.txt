@@ -1,0 +1,16 @@
+// Tarefa 1: atribuição
+var nome = "Ana";
+int idade = 20;
+double altura = 1.65;
+String curso = 'Compiladores';
+bool aprovado = true;
+final pi = 3.14;
+int soma = idade + 2 * 3;
+
+idade = idade + 1;
+idade += 2;
+soma -= 1;
+
+print(nome);
+print(idade);
+print(soma);

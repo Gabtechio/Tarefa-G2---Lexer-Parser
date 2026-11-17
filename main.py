@@ -1,9 +1,3 @@
-"""Validador de um subconjunto de Dart (Grupo 18) - Sly.
-
-Uso:
-    python main.py                      # valida todos os .txt de examples/
-    python main.py examples/arq.txt     # valida arquivo(s) específico(s)
-"""
 import os
 import sys
 
@@ -11,22 +5,6 @@ from core.lexer import DartLexer, ErroLexico
 from core.parser import DartParser, ErroSintatico
 
 LIMITE_ITERACOES = 100000
-
-    def exec_for(self, no):
-        _, init, cond, update, corpo, linha = no
-        self.linha = linha
-        self.escopos.append({})
-        try:
-            self.executar(init)
-            repeticoes = 0
-            while self.avaliar_cond(cond):
-                repeticoes += 1
-                if repeticoes > LIMITE_ITERACOES:
-                    self.erro("laço excedeu o limite de iterações (possível laço infinito)")
-                self.executar_bloco(corpo)
-                self.executar(update)
-        finally:
-            self.escopos.pop()
 
 
 class ErroSemantico(Exception):
@@ -59,7 +37,7 @@ def eh_numero(v):
 
 
 class Interpretador:
-    """Executa a AST gerada pelo parser."""
+    """Executa a AST gerada pelo parser (variáveis, print, if, for)."""
 
     def __init__(self):
         self.escopos = [{}]
@@ -68,6 +46,7 @@ class Interpretador:
     def erro(self, mensagem):
         raise ErroSemantico(mensagem, self.linha)
 
+    # ---------------------------------------------------------- variáveis
     def buscar(self, nome):
         for escopo in reversed(self.escopos):
             if nome in escopo:
@@ -86,7 +65,7 @@ class Interpretador:
             self.erro(f"não é possível atribuir {t} à variável '{nome}' do tipo {tipo}")
         return valor
 
-
+    # ---------------------------------------------------------- execução
     def executar_bloco(self, comandos):
         self.escopos.append({})
         try:
@@ -98,7 +77,7 @@ class Interpretador:
     def executar(self, no):
         getattr(self, 'exec_' + no[0])(no)
 
-        def exec_decl(self, no):
+    def exec_decl(self, no):
         _, tipo, nome, expr, final, linha = no
         self.linha = linha
         if nome in self.escopos[-1]:
@@ -127,13 +106,10 @@ class Interpretador:
             valor = self.operar(op[0], var['valor'], valor)
         var['valor'] = self.conformar(var['tipo'], valor, nome)
 
-
-
     def exec_print(self, no):
         _, expr, linha = no
         self.linha = linha
         print(formatar(self.avaliar(expr)))
-
 
     def exec_if(self, no):
         _, cond, entao, senao, linha = no
@@ -143,7 +119,23 @@ class Interpretador:
         elif senao is not None:
             self.executar_bloco(senao)
 
+    def exec_for(self, no):
+        _, init, cond, update, corpo, linha = no
+        self.linha = linha
+        self.escopos.append({})
+        try:
+            self.executar(init)
+            repeticoes = 0
+            while self.avaliar_cond(cond):
+                repeticoes += 1
+                if repeticoes > LIMITE_ITERACOES:
+                    self.erro("laço excedeu o limite de iterações (possível laço infinito)")
+                self.executar_bloco(corpo)
+                self.executar(update)
+        finally:
+            self.escopos.pop()
 
+    # ---------------------------------------------------------- expressões
     def avaliar(self, no):
         tipo = no[0]
         if tipo in ('int', 'double', 'string', 'bool'):
@@ -179,7 +171,6 @@ class Interpretador:
             return a / b
         return a % b
 
-
     def avaliar_cond(self, no):
         _, op, esq, dir_ = no
         a, b = self.avaliar(esq), self.avaliar(dir_)
@@ -193,7 +184,7 @@ class Interpretador:
 
 
 def validar_arquivo(caminho):
-    """Retorna True se o arquivo passou pelas análises."""
+    """Retorna True se o arquivo passou por todas as etapas."""
     print(f"=== {caminho} ===")
     with open(caminho, encoding='utf-8') as f:
         texto = f.read()
@@ -212,8 +203,6 @@ def validar_arquivo(caminho):
     except ErroSemantico as e:
         print(f"[ERRO SEMÂNTICO] linha {e.linha}: {e.mensagem}\n")
         return False
-
-
 
     print("[OK] arquivo válido\n")
     return True

@@ -1,0 +1,18 @@
+// Tarefa 3: IF simples com comparação
+int nota = 7;
+
+if (nota >= 7) {
+  print("aprovado");
+}
+
+if (nota == 10) {
+  print("nota máxima");
+} else if (nota > 5) {
+  print("recuperação ou aprovado");
+} else {
+  print("reprovado");
+}
+
+if (nota != 3) {
+  print("nota diferente de 3");
+}
