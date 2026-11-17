@@ -24,6 +24,10 @@ class DartParser(Parser):
     def program(self, p):
         return ('program', p.statement_list)
 
+    @_('decl_init SEMI', 'update SEMI', 'if_stmt', 'for_stmt')
+    def statement(self, p):
+        return p[0]
+
     @_('')
     def program(self, p):
         return ('program', [])
@@ -35,6 +39,16 @@ class DartParser(Parser):
     @_('statement')
     def statement_list(self, p):
         return [p.statement]
+
+    # ---------------------------------------------------------- tarefa 4: FOR
+    @_('FOR LPAREN for_init SEMI condition SEMI update RPAREN block')
+    def for_stmt(self, p):
+        return ('for', p.for_init, p.condition, p.update, p.block, p.lineno)
+
+    @_('decl_init', 'update')
+    def for_init(self, p):
+        return p[0]
+
 
 
 

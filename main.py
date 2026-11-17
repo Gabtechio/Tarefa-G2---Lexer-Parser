@@ -10,6 +10,25 @@ import sys
 from core.lexer import DartLexer, ErroLexico
 from core.parser import DartParser, ErroSintatico
 
+LIMITE_ITERACOES = 100000
+
+    def exec_for(self, no):
+        _, init, cond, update, corpo, linha = no
+        self.linha = linha
+        self.escopos.append({})
+        try:
+            self.executar(init)
+            repeticoes = 0
+            while self.avaliar_cond(cond):
+                repeticoes += 1
+                if repeticoes > LIMITE_ITERACOES:
+                    self.erro("laço excedeu o limite de iterações (possível laço infinito)")
+                self.executar_bloco(corpo)
+                self.executar(update)
+        finally:
+            self.escopos.pop()
+
+
 class ErroSemantico(Exception):
     def __init__(self, mensagem, linha):
         super().__init__(mensagem)
@@ -116,6 +135,15 @@ class Interpretador:
         print(formatar(self.avaliar(expr)))
 
 
+    def exec_if(self, no):
+        _, cond, entao, senao, linha = no
+        self.linha = linha
+        if self.avaliar_cond(cond):
+            self.executar_bloco(entao)
+        elif senao is not None:
+            self.executar_bloco(senao)
+
+
     def avaliar(self, no):
         tipo = no[0]
         if tipo in ('int', 'double', 'string', 'bool'):
@@ -150,6 +178,18 @@ class Interpretador:
         if op == '/':
             return a / b
         return a % b
+
+
+    def avaliar_cond(self, no):
+        _, op, esq, dir_ = no
+        a, b = self.avaliar(esq), self.avaliar(dir_)
+        if op == '==':
+            return a == b
+        if op == '!=':
+            return a != b
+        if not (eh_numero(a) and eh_numero(b)):
+            self.erro(f"não é possível comparar {tipo_de(a)} com {tipo_de(b)} usando '{op}'")
+        return {'<': a < b, '<=': a <= b, '>': a > b, '>=': a >= b}[op]
 
 
 def validar_arquivo(caminho):
